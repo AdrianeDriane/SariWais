@@ -7,6 +7,7 @@ package com.g4bsit2a.sariwais;
 /**
  *
  * @author Adriane Dilao
+ * @author Dave
  */
 public class SariWais {
 
