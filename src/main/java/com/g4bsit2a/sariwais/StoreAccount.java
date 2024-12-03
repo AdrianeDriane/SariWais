@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.g4bsit2a.sariwais;
 
-/**
- *
- * @author Adriane Dilao
- */
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +13,6 @@ public class StoreAccount {
     // Static list
     private static List<StoreAccount> accountList = new ArrayList<>();
 
-    
     public StoreAccount(String username, String password, String storeName, String storeAddress, String contactNumber) {
         this.username = username;
         this.password = password;
@@ -31,13 +22,12 @@ public class StoreAccount {
     }
 
     // Custom Methods
-
+    
     public static boolean login(String username, String password) {
-        for (StoreAccount account : accountList) {
-            if (account.getUsername().equals(username) && account.getPassword().equals(password)) {
-                System.out.println("Login successful for store: " + account.getStoreName());
-                return true;
-            }
+        StoreAccount account = findAccountByUsername(username);
+        if (account != null && isPasswordCorrect(account, password)) {
+            System.out.println("Login successful for store: " + account.getStoreName());
+            return true;
         }
         System.out.println("Login failed. Invalid credentials.");
         return false;
@@ -49,28 +39,57 @@ public class StoreAccount {
     }
 
     public static boolean signup(String username, String password, String storeName, String storeAddress, String contactNumber) {
-        for (StoreAccount account : accountList) {
-            if (account.getUsername().equals(username)) {
-                System.out.println("Signup failed. Username already exists.");
-                return false;
-            }
+        if (isUsernameTaken(username)) {
+            System.out.println("Signup failed. Username already exists.");
+            return false;
         }
-        StoreAccount newAccount = new StoreAccount(username, password, storeName, storeAddress, contactNumber);
-        accountList.add(newAccount);
-        System.out.println("Signup successful for store: " + storeName);
+        addNewAccount(username, password, storeName, storeAddress, contactNumber);
         return true;
     }
 
     public static boolean resetPassword(String username, String newPassword) {
-        for (StoreAccount account : accountList) {
-            if (account.getUsername().equals(username)) {
-                account.setPassword(newPassword);
-                System.out.println("Password reset successful for store: " + account.getStoreName());
-                return true;
-            }
+        StoreAccount account = findAccountByUsername(username);
+        if (account != null) {
+            updateAccountPassword(account, newPassword);
+            return true;
         }
         System.out.println("Password reset failed. Account not found.");
         return false;
+    }
+
+    
+    // Private Methods
+    
+    private static StoreAccount findAccountByUsername(String username) {
+        return accountList.stream()
+                .filter(account -> account.getUsername().equals(username))
+                .findFirst()
+                .orElse(null);
+    }
+
+    private static boolean isPasswordCorrect(StoreAccount account, String password) {
+        return account.getPassword().equals(password);
+    }
+
+    private static boolean isUsernameTaken(String username) {
+        return findAccountByUsername(username) != null;
+    }
+
+    private static void addNewAccount(String username, String password, String storeName, String storeAddress, String contactNumber) {
+        StoreAccount newAccount = new StoreAccount(username, password, storeName, storeAddress, contactNumber);
+        accountList.add(newAccount);
+        System.out.println("Signup successful for store: " + storeName);
+    }
+
+    private static void updateAccountPassword(StoreAccount account, String newPassword) {
+        account.setPassword(newPassword);
+        System.out.println("Password reset successful for store: " + account.getStoreName());
+    }
+
+    // Preload accounts for testing
+    public static void preloadAccounts() {
+        accountList.add(new StoreAccount("admin", "admin123", "Admin Store", "123 Admin St.", "123-456-7890"));
+        accountList.add(new StoreAccount("staff", "staff123", "Staff Store", "456 Staff Ave.", "987-654-3210"));
     }
 
     // Getters and setters
@@ -113,11 +132,4 @@ public class StoreAccount {
     public void setContactNumber(String contactNumber) {
         this.contactNumber = contactNumber;
     }
-    
-    // For testing purposes
-    public static void preloadAccounts() {
-        accountList.add(new StoreAccount("admin", "admin123", "Admin Store", "123 Admin St.", "123-456-7890"));
-        accountList.add(new StoreAccount("staff", "staff123", "Staff Store", "456 Staff Ave.", "987-654-3210"));
-    }
 }
-
