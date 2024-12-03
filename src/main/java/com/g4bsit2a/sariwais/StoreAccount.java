@@ -9,6 +9,8 @@ public class StoreAccount {
     private String storeName;
     private String storeAddress;
     private String contactNumber;
+    private InventoryController inventoryController;
+
 
     // Static list
     private static List<StoreAccount> accountList = new ArrayList<>();
@@ -19,9 +21,17 @@ public class StoreAccount {
         this.storeName = storeName;
         this.storeAddress = storeAddress;
         this.contactNumber = contactNumber;
+        this.inventoryController = new InventoryController();
+    }
+    
+    public InventoryController getInventoryController() {
+        return inventoryController;
     }
 
     // Custom Methods
+    public static StoreAccount findByUsername(String username) {
+        return findAccountByUsername(username);
+    }
     
     public static boolean login(String username, String password) {
         StoreAccount account = findAccountByUsername(username);
@@ -35,7 +45,7 @@ public class StoreAccount {
 
     public static void logout() {
         System.out.println("Account logged out.");
-        // TODO: Logic for logout
+        // Assignment: Logic for logout
     }
 
     public static boolean signup(String username, String password, String storeName, String storeAddress, String contactNumber) {
@@ -85,13 +95,19 @@ public class StoreAccount {
         account.setPassword(newPassword);
         System.out.println("Password reset successful for store: " + account.getStoreName());
     }
-
-    // Preload accounts for testing
+    
+    // Hardcoded data
     public static void preloadAccounts() {
-        accountList.add(new StoreAccount("admin", "admin123", "Admin Store", "123 Admin St.", "123-456-7890"));
-        accountList.add(new StoreAccount("staff", "staff123", "Staff Store", "456 Staff Ave.", "987-654-3210"));
-    }
+        StoreAccount admin = new StoreAccount("admin", "admin123", "Admin Store", "123 Admin St.", "123-456-7890");
+        admin.getInventoryController().addInventoryItem(new InventoryItem("Rice", 50, 0.5, 10, InventoryItem.Category.FOOD));
+        admin.getInventoryController().addInventoryItem(new InventoryItem("Soap", 30, 1.5, 5, InventoryItem.Category.TOILETRIES));
+        accountList.add(admin);
 
+        StoreAccount staff = new StoreAccount("staff", "staff123", "Staff Store", "456 Staff Ave.", "987-654-3210");
+        staff.getInventoryController().addInventoryItem(new InventoryItem("Chips", 100, 0.75, 15, InventoryItem.Category.SNACKS));
+        accountList.add(staff);
+    }
+    
     // Getters and setters
     public String getUsername() {
         return username;
