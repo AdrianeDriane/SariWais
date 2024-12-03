@@ -5,6 +5,7 @@ import java.util.List;
 
 public class InventoryController {
     private List<InventoryItem> inventory;
+    private int itemCounter = 1;
 
     public InventoryController() {
         inventory = new ArrayList<>();
@@ -13,6 +14,7 @@ public class InventoryController {
     //Custom Methods
     
     public void addInventoryItem(InventoryItem item) {
+        item.setProductId("P" + itemCounter++); // Assign ID using the store's counter
         inventory.add(item);
     }
     

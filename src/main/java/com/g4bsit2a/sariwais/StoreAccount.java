@@ -99,12 +99,12 @@ public class StoreAccount {
     // Hardcoded data
     public static void preloadAccounts() {
         StoreAccount admin = new StoreAccount("admin", "admin123", "Admin Store", "123 Admin St.", "123-456-7890");
-        admin.getInventoryController().addInventoryItem(new InventoryItem("Rice", 50, 0.5, 10, InventoryItem.Category.FOOD));
-        admin.getInventoryController().addInventoryItem(new InventoryItem("Soap", 30, 1.5, 5, InventoryItem.Category.TOILETRIES));
+        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Rice", 50, 0.5, 10, InventoryItem.Category.FOOD));
+        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Soap", 30, 1.5, 5, InventoryItem.Category.TOILETRIES));
         accountList.add(admin);
 
         StoreAccount staff = new StoreAccount("staff", "staff123", "Staff Store", "456 Staff Ave.", "987-654-3210");
-        staff.getInventoryController().addInventoryItem(new InventoryItem("Chips", 100, 0.75, 15, InventoryItem.Category.SNACKS));
+        staff.getInventoryController().addInventoryItem(new InventoryItem(null, "Chips", 100, 0.75, 15, InventoryItem.Category.SNACKS));
         accountList.add(staff);
     }
     
