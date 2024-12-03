@@ -12,17 +12,15 @@ public class InventoryItem {
     private double price;
     private int lowStockThreshold;
     private Category category;
-    
-    private static int idCounter = 1;
 
-    public InventoryItem(String productName, int stock, double price, int lowStockThreshold, Category category) {
-        this.productId = generateProductId();
-        this.productName = productName;
-        this.stock = stock;
-        this.price = price;
-        this.lowStockThreshold = lowStockThreshold;
-        this.category = category;
-    }
+    public InventoryItem(String productId, String productName, int stock, double price, int lowStockThreshold, Category category) {
+    this.productId = productId;
+    this.productName = productName;
+    this.stock = stock;
+    this.price = price;
+    this.lowStockThreshold = lowStockThreshold;
+    this.category = category;
+}
     
     // Custom Methods
     public void addStock(int quantity) {
@@ -43,9 +41,6 @@ public class InventoryItem {
     }
     
     //Private methods
-    private String generateProductId() {
-        return "P" + (idCounter++);
-    }
 
     // Getters and setters
     public String getProductId() {
