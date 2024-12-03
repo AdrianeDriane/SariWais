@@ -10,6 +10,7 @@ public class StoreAccount {
     private String storeAddress;
     private String contactNumber;
     private InventoryController inventoryController;
+    private List<Transaction> transactions;
 
 
     // Static list
@@ -22,6 +23,7 @@ public class StoreAccount {
         this.storeAddress = storeAddress;
         this.contactNumber = contactNumber;
         this.inventoryController = new InventoryController();
+        this.transactions = new ArrayList<>();
     }
     
     public InventoryController getInventoryController() {
@@ -29,6 +31,16 @@ public class StoreAccount {
     }
 
     // Custom Methods
+    
+    public void addTransaction(Transaction transaction) {
+        transactions.add(transaction);
+        System.out.println("Transaction " + transaction.getTransactionId() + " added successfully.");
+    }
+    
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+    
     public static StoreAccount findByUsername(String username) {
         return findAccountByUsername(username);
     }
@@ -99,14 +111,36 @@ public class StoreAccount {
     // Hardcoded data
     public static void preloadAccounts() {
         StoreAccount admin = new StoreAccount("admin", "admin123", "Admin Store", "123 Admin St.", "123-456-7890");
-        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Rice", 50, 0.5, 10, InventoryItem.Category.FOOD));
-        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Soap", 30, 1.5, 5, InventoryItem.Category.TOILETRIES));
-        accountList.add(admin);
 
-        StoreAccount staff = new StoreAccount("staff", "staff123", "Staff Store", "456 Staff Ave.", "987-654-3210");
-        staff.getInventoryController().addInventoryItem(new InventoryItem(null, "Chips", 100, 0.75, 15, InventoryItem.Category.SNACKS));
-        accountList.add(staff);
+        // Adding Filipino products to inventory
+        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Bigas", 100, 40.0, 20, InventoryItem.Category.FOOD)); // Rice
+        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Tuyo", 50, 10.0, 5, InventoryItem.Category.FOOD)); // Dried fish
+        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Sardinas", 80, 25.0, 10, InventoryItem.Category.FOOD)); // Canned sardines
+        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Sabon Panglaba", 60, 15.0, 10, InventoryItem.Category.TOILETRIES)); // Laundry soap
+        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Toothpaste", 40, 50.0, 5, InventoryItem.Category.TOILETRIES));
+        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Softdrinks", 100, 20.0, 10, InventoryItem.Category.BEVERAGES)); // Soda
+        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Kape", 75, 12.0, 10, InventoryItem.Category.BEVERAGES)); // Coffee
+        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Chicharon", 30, 30.0, 5, InventoryItem.Category.SNACKS)); // Pork cracklings
+        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Yakult", 50, 8.0, 10, InventoryItem.Category.BEVERAGES)); // Probiotic drink
+        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Cooking Oil", 20, 70.0, 5, InventoryItem.Category.HOUSEHOLD)); // Cooking oil
+
+        // Adding preloaded transactions
+        Transaction transaction1 = new Transaction("Juan Dela Cruz");
+        transaction1.addItem(admin.getInventoryController().viewInventory().get(0), 5); // Bigas
+        transaction1.addItem(admin.getInventoryController().viewInventory().get(2), 3); // Sardinas
+        transaction1.calculateTotal();
+
+        Transaction transaction2 = new Transaction("Maria Clara");
+        transaction2.addItem(admin.getInventoryController().viewInventory().get(3), 2); // Sabon Panglaba
+        transaction2.addItem(admin.getInventoryController().viewInventory().get(7), 5); // Chicharon
+        transaction2.calculateTotal();
+
+        admin.addTransaction(transaction1);
+        admin.addTransaction(transaction2);
+
+        accountList.add(admin);
     }
+
     
     // Getters and setters
     public String getUsername() {
