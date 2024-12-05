@@ -10,16 +10,18 @@ public class InventoryItem {
     private String productName;
     private int stock;
     private double price;
+    private double purchasePrice;
     private int lowStockThreshold;
     private Category category;
 
-    public InventoryItem(String productId, String productName, int stock, double price, int lowStockThreshold, Category category) {
+    public InventoryItem(String productId, String productName, int stock, double purchasePrice, double price, int lowStockThreshold, Category category) {
     this.productId = productId;
     this.productName = productName;
     this.stock = stock;
     this.price = price;
     this.lowStockThreshold = lowStockThreshold;
     this.category = category;
+    this.purchasePrice = purchasePrice;
 }
     
     // Custom Methods
@@ -73,6 +75,14 @@ public class InventoryItem {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+    
+    public double getPurchasePrice(){
+        return purchasePrice;
+    }
+    
+    public void setPurchasePrice(double purchasePrice){
+        this.purchasePrice = purchasePrice;
     }
 
     public int getLowStockThreshold() {

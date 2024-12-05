@@ -152,6 +152,8 @@ public class SariWais {
                     String productName = scanner.nextLine();
                     System.out.print("Enter stock: ");
                     int stock = scanner.nextInt();
+                    System.out.print("Enter purchase price: ");
+                    double purchasePrice = scanner.nextDouble();
                     System.out.print("Enter price: ");
                     double price = scanner.nextDouble();
                     System.out.print("Enter low stock threshold: ");
@@ -160,7 +162,7 @@ public class SariWais {
                     System.out.print("Enter category (FOOD, BEVERAGES, HOUSEHOLD, SNACKS, TOILETRIES, OTHER): ");
                     InventoryItem.Category category = InventoryItem.Category.valueOf(scanner.nextLine().toUpperCase());
 
-                    inventory.addInventoryItem(new InventoryItem(null, productName, stock, price, threshold, category));
+                    inventory.addInventoryItem(new InventoryItem(null, productName, stock, purchasePrice, price, threshold, category));
                     System.out.println("Item added successfully!");
                 }
                 case 3 -> {
