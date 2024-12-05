@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
+import java.time.LocalDate;
 
 public class StoreAccount {
     private String username;
@@ -116,16 +117,17 @@ public class StoreAccount {
         StoreAccount admin = new StoreAccount("admin", "admin123", "Admin Store", "123 Admin St.", "123-456-7890");
 
         // Adding Filipino products to inventory
-        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Bigas", 100, 38.0, 40.0, 20, InventoryItem.Category.FOOD)); // Rice
-        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Tuyo", 50, 9.0, 10.0, 5, InventoryItem.Category.FOOD)); // Dried fish
-        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Sardinas", 80, 20.0, 25.0, 10, InventoryItem.Category.FOOD)); // Canned sardines
-        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Sabon Panglaba", 60, 10.0, 15.0, 10, InventoryItem.Category.TOILETRIES)); // Laundry soap
-        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Toothpaste", 40, 45.0, 50.0, 5, InventoryItem.Category.TOILETRIES));
-        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Softdrinks", 100, 18.0, 20.0, 10, InventoryItem.Category.BEVERAGES)); // Soda
-        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Kape", 75, 10.0, 12.0, 10, InventoryItem.Category.BEVERAGES)); // Coffee
-        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Chicharon", 30, 20.0, 30.0, 5, InventoryItem.Category.SNACKS)); // Pork cracklings
-        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Yakult", 50, 6.0, 8.0, 10, InventoryItem.Category.BEVERAGES)); // Probiotic drink
-        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Cooking Oil", 20, 55.5, 70.0, 5, InventoryItem.Category.HOUSEHOLD)); // Cooking oil
+        LocalDate date = LocalDate.of(2023, 1, 1);
+        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Bigas", 100, 38.0, 40.0, 20, date, InventoryItem.Category.FOOD)); // Rice
+        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Tuyo", 50, 9.0, 10.0, 5, date, InventoryItem.Category.FOOD)); // Dried fish
+        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Sardinas", 80, 20.0, 25.0, 10, date, InventoryItem.Category.FOOD)); // Canned sardines
+        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Sabon Panglaba", 60, 10.0, 15.0, 10, date, InventoryItem.Category.TOILETRIES)); // Laundry soap
+        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Toothpaste", 40, 45.0, 50.0, 5, date, InventoryItem.Category.TOILETRIES));
+        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Softdrinks", 100, 18.0, 20.0, 10, date,InventoryItem.Category.BEVERAGES)); // Soda
+        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Kape", 75, 10.0, 12.0, 10, date, InventoryItem.Category.BEVERAGES)); // Coffee
+        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Chicharon", 30, 20.0, 30.0, 5, date, InventoryItem.Category.SNACKS)); // Pork cracklings
+        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Yakult", 50, 6.0, 8.0, 10, date, InventoryItem.Category.BEVERAGES)); // Probiotic drink
+        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Cooking Oil", 20, 55.5, 70.0, 5, date, InventoryItem.Category.HOUSEHOLD)); // Cooking oil
 
         // Adding hardcoded transactions
         try {
@@ -156,8 +158,7 @@ public class StoreAccount {
         } catch (ParseException e) {
             System.out.println("Error setting transaction dates: " + e.getMessage());
         }
-        
-        admin.setSales(admin.getTransactions());
+
         accountList.add(admin);
     }
 
@@ -201,10 +202,6 @@ public class StoreAccount {
 
     public void setContactNumber(String contactNumber) {
         this.contactNumber = contactNumber;
-    }
-    
-    public void setSales(List<Transaction> transactions){
-        this.sales = new Sales(transactions);
     }
     
     public Sales getSales() {
