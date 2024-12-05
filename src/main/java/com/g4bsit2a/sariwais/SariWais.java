@@ -86,13 +86,14 @@ public class SariWais {
 }
 
     private static void salesMenu(Scanner scanner, StoreAccount account) {
-        Sales sales = account.getSales();
+        Sales sales = new Sales(account.getTransactions(), account);
 
         while (true) {
             System.out.println("\n=== Sales Management for " + account.getStoreName() + " ===");
             System.out.println("1. View Top Selling Products");
             System.out.println("2. Generate Sales Report");
-            System.out.println("3. Back to Main Menu");
+            System.out.println("3. Generate Expenses Report");
+            System.out.println("4. Back to Main Menu");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
@@ -116,6 +117,13 @@ public class SariWais {
                     System.out.println(sales.generateSalesReport(start, end));
                 }
                 case 3 -> {
+                    System.out.print("Enter start date (YYYY-MM-DD): ");
+                    LocalDate start = LocalDate.parse(scanner.nextLine());
+                    System.out.print("Enter end date (YYYY-MM-DD): ");
+                    LocalDate end = LocalDate.parse(scanner.nextLine());
+                    System.out.println(sales.generateExpensesReport(start, end));
+                }
+                case 4 -> {
                     return;
                 }
                 default -> System.out.println("Invalid choice. Try again.");
@@ -162,7 +170,7 @@ public class SariWais {
                     System.out.print("Enter category (FOOD, BEVERAGES, HOUSEHOLD, SNACKS, TOILETRIES, OTHER): ");
                     InventoryItem.Category category = InventoryItem.Category.valueOf(scanner.nextLine().toUpperCase());
 
-                    inventory.addInventoryItem(new InventoryItem(null, productName, stock, purchasePrice, price, threshold, category));
+                    inventory.addInventoryItem(new InventoryItem(null, productName, stock, purchasePrice, price, threshold, LocalDate.now(), category));
                     System.out.println("Item added successfully!");
                 }
                 case 3 -> {
