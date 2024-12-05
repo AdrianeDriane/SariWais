@@ -1,5 +1,7 @@
 package com.g4bsit2a.sariwais;
 
+import java.time.LocalDate;
+
 public class InventoryItem {
     public enum Category {
         FOOD, BEVERAGES, HOUSEHOLD, SNACKS, TOILETRIES, OTHER
@@ -10,16 +12,20 @@ public class InventoryItem {
     private String productName;
     private int stock;
     private double price;
+    private double purchasePrice;
+    private LocalDate purchaseDate;
     private int lowStockThreshold;
     private Category category;
 
-    public InventoryItem(String productId, String productName, int stock, double price, int lowStockThreshold, Category category) {
+    public InventoryItem(String productId, String productName, int stock, double purchasePrice, double price, int lowStockThreshold, LocalDate purchaseDate, Category category) {
     this.productId = productId;
     this.productName = productName;
     this.stock = stock;
     this.price = price;
     this.lowStockThreshold = lowStockThreshold;
     this.category = category;
+    this.purchasePrice = purchasePrice;
+    this.purchaseDate = purchaseDate;
 }
     
     // Custom Methods
@@ -73,6 +79,22 @@ public class InventoryItem {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+    
+    public double getPurchasePrice(){
+        return purchasePrice;
+    }
+    
+    public void setPurchasePrice(double purchasePrice){
+        this.purchasePrice = purchasePrice;
+    }
+    
+    public LocalDate getPurchaseDate(){
+        return purchaseDate;
+    }
+    
+    public void setPurchaseDate(LocalDate purchaseDate){
+        this.purchaseDate = purchaseDate;
     }
 
     public int getLowStockThreshold() {

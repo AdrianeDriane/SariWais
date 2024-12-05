@@ -1,7 +1,6 @@
 package com.g4bsit2a.sariwais;
 
 import java.util.Scanner;
-import java.util.List;
 import java.time.LocalDate;
 
 public class SariWais {
@@ -86,12 +85,12 @@ public class SariWais {
 }
 
     private static void salesMenu(Scanner scanner, StoreAccount account) {
-        Sales sales = account.getSales();
+        Sales sales = new Sales(account.getTransactions(), account);
 
         while (true) {
             System.out.println("\n=== Sales Management for " + account.getStoreName() + " ===");
-            System.out.println("1. View Top Selling Products");
-            System.out.println("2. Generate Sales Report");
+            System.out.println("1. Generate Sales Report");
+            System.out.println("2. Generate Expenses Report");
             System.out.println("3. Back to Main Menu");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
@@ -99,21 +98,18 @@ public class SariWais {
 
             switch (choice) {
                 case 1 -> {
-                    System.out.print("Enter the number of top-selling products to view: ");
-                    int topN = scanner.nextInt();
-                    scanner.nextLine();
-                    List<InventoryItem> topProducts = sales.getTopSellingProducts(topN);
-                    System.out.println("Top Selling Products:");
-                    for (InventoryItem item : topProducts) {
-                       System.out.println("- " + item.getProductName());
-                   }
+                    System.out.print("Enter start date (YYYY-MM-DD): ");
+                    LocalDate start = LocalDate.parse(scanner.nextLine());
+                    System.out.print("Enter end date (YYYY-MM-DD): ");
+                    LocalDate end = LocalDate.parse(scanner.nextLine());
+                    System.out.println(sales.generateSalesReport(start, end));
                 }
                 case 2 -> {
                     System.out.print("Enter start date (YYYY-MM-DD): ");
                     LocalDate start = LocalDate.parse(scanner.nextLine());
                     System.out.print("Enter end date (YYYY-MM-DD): ");
                     LocalDate end = LocalDate.parse(scanner.nextLine());
-                    System.out.println(sales.generateSalesReport(start, end));
+                    System.out.println(sales.generateExpensesReport(start, end));
                 }
                 case 3 -> {
                     return;
@@ -152,6 +148,8 @@ public class SariWais {
                     String productName = scanner.nextLine();
                     System.out.print("Enter stock: ");
                     int stock = scanner.nextInt();
+                    System.out.print("Enter purchase price: ");
+                    double purchasePrice = scanner.nextDouble();
                     System.out.print("Enter price: ");
                     double price = scanner.nextDouble();
                     System.out.print("Enter low stock threshold: ");
@@ -160,7 +158,7 @@ public class SariWais {
                     System.out.print("Enter category (FOOD, BEVERAGES, HOUSEHOLD, SNACKS, TOILETRIES, OTHER): ");
                     InventoryItem.Category category = InventoryItem.Category.valueOf(scanner.nextLine().toUpperCase());
 
-                    inventory.addInventoryItem(new InventoryItem(null, productName, stock, price, threshold, category));
+                    inventory.addInventoryItem(new InventoryItem(null, productName, stock, purchasePrice, price, threshold, LocalDate.now(), category));
                     System.out.println("Item added successfully!");
                 }
                 case 3 -> {
