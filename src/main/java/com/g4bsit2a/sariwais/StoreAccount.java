@@ -2,6 +2,7 @@ package com.g4bsit2a.sariwais;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
 public class StoreAccount {
     private String username;
@@ -11,6 +12,7 @@ public class StoreAccount {
     private String contactNumber;
     private InventoryController inventoryController;
     private List<Transaction> transactions;
+    private Sales sales;
 
 
     // Static list
@@ -124,24 +126,41 @@ public class StoreAccount {
         admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Yakult", 50, 8.0, 10, InventoryItem.Category.BEVERAGES)); // Probiotic drink
         admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Cooking Oil", 20, 70.0, 5, InventoryItem.Category.HOUSEHOLD)); // Cooking oil
 
-        // Adding preloaded transactions
-        Transaction transaction1 = new Transaction("Juan Dela Cruz");
-        transaction1.addItem(admin.getInventoryController().viewInventory().get(0), 5); // Bigas
-        transaction1.addItem(admin.getInventoryController().viewInventory().get(2), 3); // Sardinas
-        transaction1.calculateTotal();
+        // Adding hardcoded transactions
+        try {
+            // Transaction 1
+            Date date1 = new java.text.SimpleDateFormat("yyyy-MM-dd").parse("2023-01-05");
+            Transaction transaction1 = new Transaction("Juan Dela Cruz", date1);
+            transaction1.addItem(admin.getInventoryController().viewInventory().get(0), 5); // 5 Bigas
+            transaction1.addItem(admin.getInventoryController().viewInventory().get(1), 10); // 10 Tuyo
+            transaction1.calculateTotal();
+            admin.addTransaction(transaction1);
 
-        Transaction transaction2 = new Transaction("Maria Clara");
-        transaction2.addItem(admin.getInventoryController().viewInventory().get(3), 2); // Sabon Panglaba
-        transaction2.addItem(admin.getInventoryController().viewInventory().get(7), 5); // Chicharon
-        transaction2.calculateTotal();
+            // Transaction 2
+            Date date2 = new java.text.SimpleDateFormat("yyyy-MM-dd").parse("2023-03-15");
+            Transaction transaction2 = new Transaction("Maria Clara", date2);
+            transaction2.addItem(admin.getInventoryController().viewInventory().get(2), 3); // 3 Sardinas
+            transaction2.addItem(admin.getInventoryController().viewInventory().get(5), 2); // 2 Softdrinks
+            transaction2.calculateTotal();
+            admin.addTransaction(transaction2);
 
-        admin.addTransaction(transaction1);
-        admin.addTransaction(transaction2);
+            // Transaction 3
+            Date date3 = new java.text.SimpleDateFormat("yyyy-MM-dd").parse("2023-06-10");
+            Transaction transaction3 = new Transaction("Jose Rizal", date3);
+            transaction3.addItem(admin.getInventoryController().viewInventory().get(7), 4); // 4 Chicharon
+            transaction3.addItem(admin.getInventoryController().viewInventory().get(9), 1); // 1 Cooking Oil
+            transaction3.calculateTotal();
+            admin.addTransaction(transaction3);
 
+        } catch (Exception e) {
+            System.out.println("Error setting transaction dates: " + e.getMessage());
+        }
+        
+        admin.setSales(admin.getTransactions());
         accountList.add(admin);
     }
 
-    
+
     // Getters and setters
     public String getUsername() {
         return username;
@@ -181,5 +200,13 @@ public class StoreAccount {
 
     public void setContactNumber(String contactNumber) {
         this.contactNumber = contactNumber;
+    }
+    
+    public void setSales(List<Transaction> transactions){
+        this.sales = new Sales(transactions);
+    }
+    
+    public Sales getSales() {
+        return sales;
     }
 }
