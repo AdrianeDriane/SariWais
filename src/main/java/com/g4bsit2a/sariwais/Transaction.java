@@ -1,12 +1,12 @@
 package com.g4bsit2a.sariwais;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Transaction {
     private final String transactionId;
-    private final Date transactionDate;
+    private final LocalDate transactionDate;
     private final List<TransactionItem> itemsSold;
     private double totalAmount;
     private String customerName;
@@ -15,14 +15,14 @@ public class Transaction {
     // Default constructor with current date
     public Transaction(String customerName) {
         this.transactionId = generateTransactionId();
-        this.transactionDate = new Date(); // Default to the current date
+        this.transactionDate = LocalDate.now();
         this.itemsSold = new ArrayList<>();
         this.totalAmount = 0.0;
         this.customerName = customerName;
     }
 
     // New constructor to allow setting a custom date
-    public Transaction(String customerName, Date transactionDate) {
+    public Transaction(String customerName, LocalDate transactionDate) {
         this.transactionId = generateTransactionId();
         this.transactionDate = transactionDate;
         this.itemsSold = new ArrayList<>();
@@ -57,8 +57,8 @@ public class Transaction {
         return transactionId;
     }
 
-    public Date getTransactionDate() {
-        return transactionDate;
+    public LocalDate getTransactionDate() {
+        return transactionDate;  
     }
 
     public List<TransactionItem> getItemsSold() {

@@ -1,9 +1,7 @@
 package com.g4bsit2a.sariwais;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Date;
 import java.time.LocalDate;
 
 public class StoreAccount {
@@ -128,36 +126,27 @@ public class StoreAccount {
         admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Chicharon", 30, 20.0, 30.0, 5, date, InventoryItem.Category.SNACKS)); // Pork cracklings
         admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Yakult", 50, 6.0, 8.0, 10, date, InventoryItem.Category.BEVERAGES)); // Probiotic drink
         admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Cooking Oil", 20, 55.5, 70.0, 5, date, InventoryItem.Category.HOUSEHOLD)); // Cooking oil
-
-        // Adding hardcoded transactions
-        try {
-            // Transaction 1
-            Date date1 = new java.text.SimpleDateFormat("yyyy-MM-dd").parse("2023-01-05");
-            Transaction transaction1 = new Transaction("Juan Dela Cruz", date1);
-            transaction1.addItem(admin.getInventoryController().viewInventory().get(0), 5); // 5 Bigas
-            transaction1.addItem(admin.getInventoryController().viewInventory().get(1), 10); // 10 Tuyo
-            transaction1.calculateTotal();
-            admin.addTransaction(transaction1);
-
-            // Transaction 2
-            Date date2 = new java.text.SimpleDateFormat("yyyy-MM-dd").parse("2023-03-15");
-            Transaction transaction2 = new Transaction("Maria Clara", date2);
-            transaction2.addItem(admin.getInventoryController().viewInventory().get(2), 3); // 3 Sardinas
-            transaction2.addItem(admin.getInventoryController().viewInventory().get(5), 2); // 2 Softdrinks
-            transaction2.calculateTotal();
-            admin.addTransaction(transaction2);
-
-            // Transaction 3
-            Date date3 = new java.text.SimpleDateFormat("yyyy-MM-dd").parse("2023-06-10");
-            Transaction transaction3 = new Transaction("Jose Rizal", date3);
-            transaction3.addItem(admin.getInventoryController().viewInventory().get(7), 4); // 4 Chicharon
-            transaction3.addItem(admin.getInventoryController().viewInventory().get(9), 1); // 1 Cooking Oil
-            transaction3.calculateTotal();
-            admin.addTransaction(transaction3);
-
-        } catch (ParseException e) {
-            System.out.println("Error setting transaction dates: " + e.getMessage());
-        }
+        // Transaction 1
+        LocalDate date1 = LocalDate.of(2023,01,05);
+        Transaction transaction1 = new Transaction("Juan Dela Cruz", date1);
+        transaction1.addItem(admin.getInventoryController().viewInventory().get(0), 5); // 5 Bigas
+        transaction1.addItem(admin.getInventoryController().viewInventory().get(1), 10); // 10 Tuyo
+        transaction1.calculateTotal();
+        admin.addTransaction(transaction1);
+        // Transaction 2
+        LocalDate date2 = LocalDate.of(2023,03,15);
+        Transaction transaction2 = new Transaction("Maria Clara", date2);
+        transaction2.addItem(admin.getInventoryController().viewInventory().get(2), 3); // 3 Sardinas
+        transaction2.addItem(admin.getInventoryController().viewInventory().get(5), 2); // 2 Softdrinks
+        transaction2.calculateTotal();
+        admin.addTransaction(transaction2);
+        // Transaction 3
+        LocalDate date3 = LocalDate.of(2023,06,10);
+        Transaction transaction3 = new Transaction("Jose Rizal", date3);
+        transaction3.addItem(admin.getInventoryController().viewInventory().get(7), 4); // 4 Chicharon
+        transaction3.addItem(admin.getInventoryController().viewInventory().get(9), 1); // 1 Cooking Oil
+        transaction3.calculateTotal();
+        admin.addTransaction(transaction3);
 
         accountList.add(admin);
     }
