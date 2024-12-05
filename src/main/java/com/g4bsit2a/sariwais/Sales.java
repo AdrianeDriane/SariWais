@@ -74,8 +74,14 @@ public class Sales {
     }
     
     public int getTotalTransactions(LocalDate start, LocalDate end) {
-        return transactions.size();
+        return (int) transactions.stream()
+                .filter(t -> {
+                    LocalDate transactionDate = t.getTransactionDate();
+                    return !transactionDate.isBefore(start) && !transactionDate.isAfter(end);
+                })
+                .count();
     }
+
     
     // NOTE: We subdivided expenses into Costs of Goods Sold (COGS)
     // and COGP (COGP)
@@ -106,10 +112,10 @@ public class Sales {
             LocalDate purchaseDate = item.getPurchaseDate();
             if ((purchaseDate.isEqual(start) || purchaseDate.isAfter(start)) &&
                 (purchaseDate.isEqual(end) || purchaseDate.isBefore(end))) {
-                sum += (item.getPrice() * item.getStock());
+                sum += (item.getPurchasePrice() * item.getStock());
             }
         }
-        return sum;
+        return sum + getCOGS(start, end);
     }
 
 
@@ -122,7 +128,7 @@ public class Sales {
     public String generateSalesReport(LocalDate start, LocalDate end) {
         StringBuilder report = new StringBuilder("Sales Report\n");
         report.append("From: ").append(start).append(" To: ").append(end).append("\n");
-        report.append("Timestamp: ").append(LocalDate.now());
+        report.append("Timestamp: ").append(LocalDate.now()).append("\n");
         report.append("Total Revenue: PHP").append(getTotalRevenue(start, end)).append("\n");
         report.append("Total Profit: PHP").append(getTotalProfit(start, end)).append("\n");
         report.append("Total Transactions: ").append(getTotalTransactions(start, end)).append("\n");
@@ -142,7 +148,7 @@ public class Sales {
     public String generateExpensesReport(LocalDate start, LocalDate end){
         StringBuilder report = new StringBuilder("Expenses Report\n");
         report.append("From: ").append(start).append(" To: ").append(end).append("\n");
-        report.append("Timestamp: ").append(LocalDate.now());
+        report.append("Timestamp: ").append(LocalDate.now()).append("\n");
         report.append("Total COGS: PHP").append(getCOGS(start, end)).append("\n");
         report.append("Total COGP: PHP").append(getCOGP(start, end)).append("\n");
         
