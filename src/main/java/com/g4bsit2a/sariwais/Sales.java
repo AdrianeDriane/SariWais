@@ -12,10 +12,6 @@ public class Sales {
         this.transactions = transactions;
     }
 
-    public void addTransaction(Transaction transaction) {
-        transactions.add(transaction);
-    }
-
     public List<InventoryItem> getTopSellingProducts(int topN) {
         Map<InventoryItem, Integer> salesCount = new HashMap<>();
         for (Transaction transaction : transactions) {
@@ -41,8 +37,17 @@ public class Sales {
                 .mapToDouble(Transaction::getTotalAmount)
                 .sum();
     }
+    
+    // NOTE: We subdivided expenses into Costs of Goods Sold (COGS)
+    // and COGP (COGP)
+    // COGS refers to the cost of the goods being sold
+    // COGP refers to the cost of the total goods being purchased at a specific timeframe
+    // - Adriane
 
-    public double getTotalCapital(LocalDate start, LocalDate end) {
+    //get Expenses methods
+   
+    //Cost of Goods Sold
+    public double getCOGS(LocalDate start, LocalDate end) { //formerly getTotalCapital
         return transactions.stream()
                 .filter(t -> {
                     LocalDate transactionDate = t.getTransactionDate().toInstant()
@@ -51,19 +56,20 @@ public class Sales {
                     return !transactionDate.isBefore(start) && !transactionDate.isAfter(end);
                 })
                 .flatMap(t -> t.getItemsSold().stream())
-                .mapToDouble(item -> item.getItem().getStock() * item.getItem().getPrice())
+                .mapToDouble(item -> item.getQuantity() * item.getItem().getPurchasePrice())
                 .sum();
     }
 
     public double getTotalProfit(LocalDate start, LocalDate end) {
         double revenue = getTotalRevenue(start, end);
-        double capital = getTotalCapital(start, end);
-        return revenue - capital;
+        double cogs = getCOGS(start, end);
+        return revenue - cogs;
     }
 
     public String generateSalesReport(LocalDate start, LocalDate end) {
         StringBuilder report = new StringBuilder("Sales Report\n");
         report.append("From: ").append(start).append(" To: ").append(end).append("\n");
+        report.append("Timestamp: ").append(LocalDate.now());
         report.append("Total Revenue: PHP").append(getTotalRevenue(start, end)).append("\n");
         report.append("Total Profit: PHP").append(getTotalProfit(start, end)).append("\n");
         report.append("Top Selling Products:\n");
