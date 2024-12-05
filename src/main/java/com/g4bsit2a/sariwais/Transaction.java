@@ -5,9 +5,9 @@ import java.util.Date;
 import java.util.List;
 
 public class Transaction {
-    private String transactionId;
-    private Date transactionDate;
-    private List<TransactionItem> itemsSold;
+    private final String transactionId;
+    private final Date transactionDate;
+    private final List<TransactionItem> itemsSold;
     private double totalAmount;
     private String customerName;
     private static int transactionCounter = 1;

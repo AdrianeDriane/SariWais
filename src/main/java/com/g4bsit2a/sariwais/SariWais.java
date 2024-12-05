@@ -8,7 +8,7 @@ public class SariWais {
     public static void main(String[] args) {
         StoreAccount.preloadAccounts();
         Scanner scanner = new Scanner(System.in);
-        StoreAccount currentAccount = null;
+        StoreAccount currentAccount;
 
         while (true) {
             System.out.println("\n=== SariWais System ===");

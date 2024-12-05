@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InventoryController {
-    private List<InventoryItem> inventory;
+    private final List<InventoryItem> inventory;
     private int itemCounter = 1;
 
     public InventoryController() {
