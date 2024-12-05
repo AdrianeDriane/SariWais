@@ -116,16 +116,16 @@ public class StoreAccount {
         StoreAccount admin = new StoreAccount("admin", "admin123", "Admin Store", "123 Admin St.", "123-456-7890");
 
         // Adding Filipino products to inventory
-        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Bigas", 100, 40.0, 20, InventoryItem.Category.FOOD)); // Rice
-        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Tuyo", 50, 10.0, 5, InventoryItem.Category.FOOD)); // Dried fish
-        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Sardinas", 80, 25.0, 10, InventoryItem.Category.FOOD)); // Canned sardines
-        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Sabon Panglaba", 60, 15.0, 10, InventoryItem.Category.TOILETRIES)); // Laundry soap
-        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Toothpaste", 40, 50.0, 5, InventoryItem.Category.TOILETRIES));
-        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Softdrinks", 100, 20.0, 10, InventoryItem.Category.BEVERAGES)); // Soda
-        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Kape", 75, 12.0, 10, InventoryItem.Category.BEVERAGES)); // Coffee
-        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Chicharon", 30, 30.0, 5, InventoryItem.Category.SNACKS)); // Pork cracklings
-        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Yakult", 50, 8.0, 10, InventoryItem.Category.BEVERAGES)); // Probiotic drink
-        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Cooking Oil", 20, 70.0, 5, InventoryItem.Category.HOUSEHOLD)); // Cooking oil
+        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Bigas", 100, 38.0, 40.0, 20, InventoryItem.Category.FOOD)); // Rice
+        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Tuyo", 50, 9.0, 10.0, 5, InventoryItem.Category.FOOD)); // Dried fish
+        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Sardinas", 80, 20.0, 25.0, 10, InventoryItem.Category.FOOD)); // Canned sardines
+        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Sabon Panglaba", 60, 10.0, 15.0, 10, InventoryItem.Category.TOILETRIES)); // Laundry soap
+        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Toothpaste", 40, 45.0, 50.0, 5, InventoryItem.Category.TOILETRIES));
+        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Softdrinks", 100, 18.0, 20.0, 10, InventoryItem.Category.BEVERAGES)); // Soda
+        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Kape", 75, 10.0, 12.0, 10, InventoryItem.Category.BEVERAGES)); // Coffee
+        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Chicharon", 30, 20.0, 30.0, 5, InventoryItem.Category.SNACKS)); // Pork cracklings
+        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Yakult", 50, 6.0, 8.0, 10, InventoryItem.Category.BEVERAGES)); // Probiotic drink
+        admin.getInventoryController().addInventoryItem(new InventoryItem(null, "Cooking Oil", 20, 55.5, 70.0, 5, InventoryItem.Category.HOUSEHOLD)); // Cooking oil
 
         // Adding hardcoded transactions
         try {
