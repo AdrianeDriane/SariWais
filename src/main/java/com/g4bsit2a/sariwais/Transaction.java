@@ -76,6 +76,10 @@ public class Transaction {
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
     }
+    
+    public double getTotalTransactions(){
+        return transactionCounter;
+    }
 
     // Nested class for transaction items
     public static class TransactionItem {
