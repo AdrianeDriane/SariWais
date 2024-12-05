@@ -1,5 +1,6 @@
 package com.g4bsit2a.sariwais;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
@@ -10,13 +11,13 @@ public class StoreAccount {
     private String storeName;
     private String storeAddress;
     private String contactNumber;
-    private InventoryController inventoryController;
-    private List<Transaction> transactions;
+    private final InventoryController inventoryController;
+    private final List<Transaction> transactions;
     private Sales sales;
 
 
     // Static list
-    private static List<StoreAccount> accountList = new ArrayList<>();
+    private final static List<StoreAccount> accountList = new ArrayList<>();
 
     public StoreAccount(String username, String password, String storeName, String storeAddress, String contactNumber) {
         this.username = username;
@@ -152,7 +153,7 @@ public class StoreAccount {
             transaction3.calculateTotal();
             admin.addTransaction(transaction3);
 
-        } catch (Exception e) {
+        } catch (ParseException e) {
             System.out.println("Error setting transaction dates: " + e.getMessage());
         }
         
