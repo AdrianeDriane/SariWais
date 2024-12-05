@@ -1,6 +1,8 @@
 package com.g4bsit2a.sariwais;
 
 import java.util.Scanner;
+import java.util.List;
+import java.time.LocalDate;
 
 public class SariWais {
     public static void main(String[] args) {
@@ -60,26 +62,67 @@ public class SariWais {
     }
 
     private static void mainMenu(Scanner scanner, StoreAccount account) {
+    while (true) {
+        System.out.println("\n=== Main Menu for " + account.getStoreName() + " ===");
+        System.out.println("1. Inventory Management");
+        System.out.println("2. Transactions");
+        System.out.println("3. Sales");
+        System.out.println("4. Logout");
+        System.out.print("Enter your choice: ");
+        int choice = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
+        switch (choice) {
+            case 1 -> inventoryMenu(scanner, account);
+            case 2 -> transactionMenu(scanner, account);
+            case 3 -> salesMenu(scanner, account);
+            case 4 -> {
+                System.out.println("Logged out of " + account.getStoreName() + ".");
+                return;
+            }
+            default -> System.out.println("Invalid choice. Try again.");
+        }
+    }
+}
+
+    private static void salesMenu(Scanner scanner, StoreAccount account) {
+        Sales sales = account.getSales();
+
         while (true) {
-            System.out.println("\n=== Main Menu for " + account.getStoreName() + " ===");
-            System.out.println("1. Inventory Management");
-            System.out.println("2. Transactions");
-            System.out.println("3. Logout");
+            System.out.println("\n=== Sales Management for " + account.getStoreName() + " ===");
+            System.out.println("1. View Top Selling Products");
+            System.out.println("2. Generate Sales Report");
+            System.out.println("3. Back to Main Menu");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
 
             switch (choice) {
-                case 1 -> inventoryMenu(scanner, account);
-                case 2 -> transactionMenu(scanner, account);
+                case 1 -> {
+                    System.out.print("Enter the number of top-selling products to view: ");
+                    int topN = scanner.nextInt();
+                    scanner.nextLine();
+                    List<InventoryItem> topProducts = sales.getTopSellingProducts(topN);
+                    System.out.println("Top Selling Products:");
+                    for (InventoryItem item : topProducts) {
+                       System.out.println("- " + item.getProductName());
+                   }
+                }
+                case 2 -> {
+                    System.out.print("Enter start date (YYYY-MM-DD): ");
+                    LocalDate start = LocalDate.parse(scanner.nextLine());
+                    System.out.print("Enter end date (YYYY-MM-DD): ");
+                    LocalDate end = LocalDate.parse(scanner.nextLine());
+                    System.out.println(sales.generateSalesReport(start, end));
+                }
                 case 3 -> {
-                    System.out.println("Logged out of " + account.getStoreName() + ".");
                     return;
                 }
                 default -> System.out.println("Invalid choice. Try again.");
             }
         }
     }
+
 
     private static void inventoryMenu(Scanner scanner, StoreAccount account) {
         InventoryController inventory = account.getInventoryController();
