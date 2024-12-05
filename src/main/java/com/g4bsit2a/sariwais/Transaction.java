@@ -12,9 +12,19 @@ public class Transaction {
     private String customerName;
     private static int transactionCounter = 1;
 
+    // Default constructor with current date
     public Transaction(String customerName) {
         this.transactionId = generateTransactionId();
-        this.transactionDate = new Date();
+        this.transactionDate = new Date(); // Default to the current date
+        this.itemsSold = new ArrayList<>();
+        this.totalAmount = 0.0;
+        this.customerName = customerName;
+    }
+
+    // New constructor to allow setting a custom date
+    public Transaction(String customerName, Date transactionDate) {
+        this.transactionId = generateTransactionId();
+        this.transactionDate = transactionDate;
         this.itemsSold = new ArrayList<>();
         this.totalAmount = 0.0;
         this.customerName = customerName;
@@ -25,7 +35,6 @@ public class Transaction {
     }
 
     // Custom Methods
-
     public void addItem(InventoryItem item, int quantity) {
         if (item.getStock() >= quantity) {
             itemsSold.add(new TransactionItem(item, quantity));
