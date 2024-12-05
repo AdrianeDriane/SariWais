@@ -1,7 +1,6 @@
 package com.g4bsit2a.sariwais;
 
 import java.util.Scanner;
-import java.util.List;
 import java.time.LocalDate;
 
 public class SariWais {
@@ -90,40 +89,29 @@ public class SariWais {
 
         while (true) {
             System.out.println("\n=== Sales Management for " + account.getStoreName() + " ===");
-            System.out.println("1. View Top Selling Products");
-            System.out.println("2. Generate Sales Report");
-            System.out.println("3. Generate Expenses Report");
-            System.out.println("4. Back to Main Menu");
+            System.out.println("1. Generate Sales Report");
+            System.out.println("2. Generate Expenses Report");
+            System.out.println("3. Back to Main Menu");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
 
             switch (choice) {
                 case 1 -> {
-                    System.out.print("Enter the number of top-selling products to view: ");
-                    int topN = scanner.nextInt();
-                    scanner.nextLine();
-                    List<InventoryItem> topProducts = sales.getTopSellingProducts(topN);
-                    System.out.println("Top Selling Products:");
-                    for (InventoryItem item : topProducts) {
-                       System.out.println("- " + item.getProductName());
-                   }
-                }
-                case 2 -> {
                     System.out.print("Enter start date (YYYY-MM-DD): ");
                     LocalDate start = LocalDate.parse(scanner.nextLine());
                     System.out.print("Enter end date (YYYY-MM-DD): ");
                     LocalDate end = LocalDate.parse(scanner.nextLine());
                     System.out.println(sales.generateSalesReport(start, end));
                 }
-                case 3 -> {
+                case 2 -> {
                     System.out.print("Enter start date (YYYY-MM-DD): ");
                     LocalDate start = LocalDate.parse(scanner.nextLine());
                     System.out.print("Enter end date (YYYY-MM-DD): ");
                     LocalDate end = LocalDate.parse(scanner.nextLine());
                     System.out.println(sales.generateExpensesReport(start, end));
                 }
-                case 4 -> {
+                case 3 -> {
                     return;
                 }
                 default -> System.out.println("Invalid choice. Try again.");
