@@ -7,9 +7,11 @@ import java.util.stream.Collectors;
 
 public class Sales {
     private final List<Transaction> transactions;
+    private StoreAccount account;
     
-    public Sales(List<Transaction> transactions) {
+    public Sales(List<Transaction> transactions, StoreAccount account) {
         this.transactions = transactions;
+        this.account = account;
     }
 
     public List<InventoryItem> getTopSellingProducts(int topN) {
@@ -38,6 +40,10 @@ public class Sales {
                 .sum();
     }
     
+    public int getTotalTransactions(LocalDate start, LocalDate end) {
+        return transactions.size();
+    }
+    
     // NOTE: We subdivided expenses into Costs of Goods Sold (COGS)
     // and COGP (COGP)
     // COGS refers to the cost of the goods being sold
@@ -59,6 +65,22 @@ public class Sales {
                 .mapToDouble(item -> item.getQuantity() * item.getItem().getPurchasePrice())
                 .sum();
     }
+    
+    //Cost of Goods Purchased
+    public double getCOGP(LocalDate start, LocalDate end) {
+        double sum = 0;
+        // Iterate through inventory items
+        for (InventoryItem item : account.getInventoryController().viewInventory()) {
+            // Check if the item's purchase date falls within the specified range
+            LocalDate purchaseDate = item.getPurchaseDate();
+            if ((purchaseDate.isEqual(start) || purchaseDate.isAfter(start)) &&
+                (purchaseDate.isEqual(end) || purchaseDate.isBefore(end))) {
+                sum += (item.getPrice() * item.getStock());
+            }
+        }
+        return sum;
+    }
+
 
     public double getTotalProfit(LocalDate start, LocalDate end) {
         double revenue = getTotalRevenue(start, end);
@@ -72,10 +94,21 @@ public class Sales {
         report.append("Timestamp: ").append(LocalDate.now());
         report.append("Total Revenue: PHP").append(getTotalRevenue(start, end)).append("\n");
         report.append("Total Profit: PHP").append(getTotalProfit(start, end)).append("\n");
+        report.append("Total Transactions: ").append(getTotalTransactions(start, end)).append("\n");
         report.append("Top Selling Products:\n");
         for (InventoryItem item : getTopSellingProducts(5)) {
             report.append("- ").append(item.getProductName()).append("\n");
         }
+        return report.toString();
+    }
+    
+    public String generateExpensesReport(LocalDate start, LocalDate end){
+        StringBuilder report = new StringBuilder("Expenses Report\n");
+        report.append("From: ").append(start).append(" To: ").append(end).append("\n");
+        report.append("Timestamp: ").append(LocalDate.now());
+        report.append("Total COGS: PHP").append(getCOGS(start, end)).append("\n");
+        report.append("Total COGP: PHP").append(getCOGP(start, end)).append("\n");
+        
         return report.toString();
     }
 }
