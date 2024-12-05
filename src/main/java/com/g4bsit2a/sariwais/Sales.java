@@ -103,6 +103,14 @@ public class Sales {
             .sum();
     }
     
+    public double getDailyAverageRevenue(LocalDate start, LocalDate end) {
+        double totalRevenue = getTotalRevenue(start, end);
+        long days = java.time.temporal.ChronoUnit.DAYS.between(start, end) + 1; // Inclusive
+        double average = days > 0 ? totalRevenue / days : 0.0;
+        return Math.round(average * 100.0) / 100.0; // Round to 2 decimal places
+    }
+
+    
     //Cost of Goods Purchased
     public double getCOGP(LocalDate start, LocalDate end) {
         double sum = 0;
@@ -130,9 +138,10 @@ public class Sales {
         report.append("From: ").append(start).append(" To: ").append(end).append("\n");
         report.append("Timestamp: ").append(LocalDate.now()).append("\n");
         report.append("Total Revenue: PHP").append(getTotalRevenue(start, end)).append("\n");
+        report.append("Daily Average Revenue: PHP").append(getDailyAverageRevenue(start, end)).append("\n"); // New Line
         report.append("Total Profit: PHP").append(getTotalProfit(start, end)).append("\n");
         report.append("Total Transactions: ").append(getTotalTransactions(start, end)).append("\n");
-        
+
         report.append("Top Selling Products:\n");
         for (InventoryItem item : getTopSellingProducts(5, start, end)) {
             report.append("- ").append(item.getProductName()).append("\n");
@@ -141,10 +150,10 @@ public class Sales {
         for (InventoryItem item : getLeastSellingProducts(5, start, end)) {
             report.append("- ").append(item.getProductName()).append("\n");
         }
-        
+
         return report.toString();
     }
-    
+
     public String generateExpensesReport(LocalDate start, LocalDate end){
         StringBuilder report = new StringBuilder("Expenses Report\n");
         report.append("From: ").append(start).append(" To: ").append(end).append("\n");
