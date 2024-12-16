@@ -26,12 +26,19 @@ SariWais addresses a common challenge faced by Sari-Sari store owners: managing 
 ---
 
 ### Contributors 👩‍💻👨‍💻  
-- **Adriane Dilao**: Group Leader / Lead Programmer  
-- **John Olasiman**: Assistant / Project Manager  
-- **Karylle Catubay**: Project Manager  
-- **Stephanie Echavez**: UI/UX Designer  
-- **Gil Tabañag**: Frontend Developer  
-- **Dave Gulay**: Programmer  
+- **Adriane Dilao**: Group Leader / Lead Programmer
+- **John Olasiman**: Assistant / Project Manager
+- **Karylle Catubay**: Project Manager
+- **Stephanie Echavez**: UI/UX Designer
+- **Gil Tabañag**: Frontend Developer
+- **Dave Gulay**: Programmer
+- **Carl Binghay**: Programmer
+- **Cris Laluna**: Programmer
+- **Felix Ybanez**: Programmer
+- **Joemarie Tibur**: Programmer
+- **Kate Vequilla**: Programmer
+- **Lance Baclayon**: Programmer
+- **Philippo Racoma**: Programmer
 
 ---
 
